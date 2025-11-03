@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Restaurant Billing System</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #fafafa;
+        padding: 20px;
+    }
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    label { font-weight: bold; }
+    select, input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #28a745;
+        color: white;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    button:hover { background: #218838; }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+    .total-box {
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: right;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Restaurant Billing System</h2>
+
+<label>Select Item</label>
+<select id="item">
+    <option value="50">Pizza - ₹50</option>
+    <option value="40">Burger - ₹40</option>
+    <option value="20">Sandwich - ₹20</option>
+    <option value="10">Tea - ₹10</option>
+    <option value="15">Coffee - ₹15</option>
+</select>
+
+<label>Quantity</label>
+<input type="number" id="qty" min="1" value="1">
+
+<button onclick="addItem()">Add to Bill</button>
+
+<table id="billTable">
+<tr>
+    <th>Item</th>
+    <th>Price (₹)</th>
+    <th>Qty</th>
+    <th>Total (₹)</th>
+</tr>
+</table>
+
+<div class="total-box">
+    <p id="subtotal">Subtotal: ₹0</p>
+    <p id="tax">GST (5%): ₹0</p>
+    <p id="grandtotal"><b>Grand Total: ₹0</b></p>
+</div>
+</div>
+
+<script>
+let subtotal = 0;
+
+function addItem() {
+    let price = parseInt(document.getElementById("item").value);
+    let itemText = document.getElementById("item").options[document.getElementById("item").selectedIndex].text;
+    let qty = parseInt(document.getElementById("qty").value);
+
+    if(qty <= 0) return alert("Enter valid quantity");
+
+    let total = price * qty;
+    subtotal += total;
+
+    let table = document.getElementById("billTable");
+    let row = table.insertRow(-1);
+    row.insertCell(0).innerHTML = itemText;
+    row.insertCell(1).innerHTML = price;
+    row.insertCell(2).innerHTML = qty;
+    row.insertCell(3).innerHTML = total;
+
+    updateTotals();
+}
+
+function updateTotals() {
+    let tax = subtotal * 0.05;
+    let grandTotal = subtotal + tax;
+
+    document.getElementById("subtotal").innerHTML = "Subtotal: ₹" + subtotal;
+    document.getElementById("tax").innerHTML = "GST (5%): ₹" + tax.toFixed(2);
+    document.getElementById("grandtotal").innerHTML = "<b>Grand Total: ₹" + grandTotal.toFixed(2) + "</b>";
+}
+</script>
+
+</body>
+</html>
