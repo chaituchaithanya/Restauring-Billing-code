@@ -126,6 +126,7 @@ function updateTotals() {
     let tax = subtotal * 0.05;
     let grandTotal = subtotal + tax;
 
+
     document.getElementById("subtotal").innerHTML = "Subtotal: ₹" + subtotal;
     document.getElementById("tax").innerHTML = "GST (5%): ₹" + tax.toFixed(2);
     document.getElementById("grandtotal").innerHTML = "<b>Grand Total: ₹" + grandTotal.toFixed(2) + "</b>";
